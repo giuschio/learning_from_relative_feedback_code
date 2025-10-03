@@ -1,1 +1,1 @@
-# cue-learner-public
+# CueLearner: Bootstrapping and local policy adaptation from relative feedback
