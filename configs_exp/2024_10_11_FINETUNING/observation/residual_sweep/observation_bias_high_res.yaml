@@ -1,0 +1,43 @@
+advice_agent_type: learned_augmented
+expert_path: experiments/2024_10_11_FINETUNING/observation/baselines_sweep/observation_bias_noise-0.01_lr-0.001_chosen/version_10_0/ckpt_policy/last.ckpt
+base_policy: experiments/2024_09_26_FINAL_EXPLORATION/20K_labels/version_0_0/ckpt_policy/model-epoch=9930000-val_reward=0.46.ckpt
+seed: 10
+env_type: Cuesim/ThreeBallHard-Cuelearner
+env_options:
+  physics.state_bias_x: 0.0071
+  physics.state_bias_y: 0.0071
+trainer:
+  log_dir: experiments/2024_10_11_FINETUNING/observation/plot_high_res/small_net_3_steps_precise_validation_long_train_residual_learner_2
+  max_steps: 1000
+  start_steps: 0
+  buffer_size: 1000
+  advice_noise: 0.0
+  adv_update_after: 20
+  adv_update_every: 5
+  advice_probability: 1.0
+  eval_every: 20
+  eval_steps: 10000
+  verbose: true
+  print_every: 100
+  advice_checkpoint_options:
+    save_best: true
+    save_last: true
+    save_period: 50
+advice_cloner:
+  args:
+    batch_size: 10
+    hidden_sizes_advice_cloner:
+    - 400
+    - 300
+    advice_step_size: 0.1
+    advice_max_steps: 1
+    advice_termination_threshold: 0.0
+    advice_search_width: 0.3
+    residual_scaling_factor: 400
+    fit_policy: restarts
+    optimizer: adam
+    learning_rate: 0.001
+    weight_decay: 0.0
+    gradient_clipping: 0.5
+    patience: 10
+    advice_training_sampling: bisection

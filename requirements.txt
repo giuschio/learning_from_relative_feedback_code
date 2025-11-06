@@ -1,0 +1,8 @@
+# Local editable packages
+-e submodules/cuesim
+-e submodules/cuelearner
+
+# Core libraries used by tools/rl scripts
+omegaconf>=2.3.0
+tensorboard>=2.13.0
+torch>=2.1.0

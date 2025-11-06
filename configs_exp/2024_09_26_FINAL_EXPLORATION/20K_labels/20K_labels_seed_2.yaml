@@ -1,0 +1,72 @@
+advice_agent_type: "learned_augmented"
+expert_path: "assets/checkpoints/ddqn_three_ball_pool/ckpt_policy/model-epoch=18870000-val_reward=0.47.ckpt"
+seed: 2
+env_type: "Cuesim/ThreeBallHard-Cuelearner"
+advice_checkpoint: "experiments/2024_09_25_FINAL_ADVICE_POLICIES/billiards_exploration_agent/version_2_0/ckpt_advice/epoch=19750.ckpt"
+trainer:
+  log_dir: "experiments/2024_09_26_FINAL_EXPLORATION/20K_labels"
+  max_steps: 10000000
+  buffer_size: 10000000
+  start_steps: 10000
+  update_after: 1000
+  update_every: 1000
+  grad_steps: -1
+  act_noise: 0.0
+  eval_steps: 10000
+  eval_every: 10000
+  advice_noise: 0.0
+  advice_q_threshold: 0.25
+  advice_probability: 0.5
+  advice_usage_limit: 500000
+  adv_update_after: 0
+  adv_update_every: 0
+  # checkpoints
+  policy_checkpoint_options:
+    save_best: true
+    save_last: true
+    save_period: 1000000
+  advice_checkpoint_options:
+    save_best: false
+    save_last: true
+    save_period: 0
+  verbose: true
+  print_every: 10000
+  advice_scheduler:
+    type: linear_fixed_budget
+    args:
+      budget: 20000
+      advice_after: 0
+      alpha_init: 1.0
+      decay_rate: 0.0
+policy:
+  type: "ddqn"
+  args:
+    batch_size: 100
+    discount: 0.0
+    policy_noise: 0.0
+    noise_clip: 0.2
+    target_update_freq: 2
+    hidden_sizes_critic: [400, 400, 400, 300, 300, 300]
+    training_sampling: "argmax"
+    # optimizer
+    optimizer: "sgd"
+    learning_rate: 0.1
+    weight_decay: 0.
+    gradient_clipping: 0.5
+    fit_policy: "fixed"
+advice_cloner:
+  args:
+    batch_size: 100
+    hidden_sizes_advice_cloner: [400, 400, 300, 300]
+    advice_step_size: 5.0
+    advice_max_steps: 50
+    advice_termination_threshold: 0.1
+    advice_search_width: 360.
+    residual_scaling_factor: 1.0
+    fit_policy: "restarts"
+    optimizer: "adam"
+    learning_rate: 0.001
+    weight_decay: 0.
+    gradient_clipping: 0.5
+    patience: 100
+

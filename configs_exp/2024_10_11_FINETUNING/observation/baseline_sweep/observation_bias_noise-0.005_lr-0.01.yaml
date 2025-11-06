@@ -1,0 +1,58 @@
+advice_agent_type: "learned_augmented"
+expert_path: "assets/checkpoints/ddqn_three_ball_pool/ckpt_policy/model-epoch=18870000-val_reward=0.47.ckpt"
+policy_checkpoint: "experiments/2024_09_26_FINAL_EXPLORATION/20K_labels/version_0_0/ckpt_policy/model-epoch=9930000-val_reward=0.46.ckpt"
+seed: 10
+env_type: "Cuesim/ThreeBallHard-Cuelearner"
+env_options:
+  physics.state_bias_x: 0.0071
+  physics.state_bias_y: 0.0071
+trainer:
+  log_dir: "experiments/2024_10_11_FINETUNING/baseline/observation_bias_noise-0.005_lr-0.01"
+  max_steps: 10000
+  buffer_size: 10000
+  start_steps: 0
+  update_after: 1000
+  update_every: 1000
+  grad_steps: -1
+  act_noise: 0.005
+  eval_steps: 2000
+  eval_every: 1000
+  # checkpoints
+  policy_checkpoint_options:
+    save_best: true
+    save_last: true
+    save_period: 1000000
+  verbose: true
+  print_every: 1000
+policy:
+  type: "ddqn"
+  args:
+    batch_size: 100
+    discount: 0.0
+    policy_noise: 0.0
+    noise_clip: 0.2
+    target_update_freq: 2
+    hidden_sizes_critic: [400, 400, 400, 300, 300, 300]
+    training_sampling: "argmax"
+    # optimizer
+    optimizer: "sgd"
+    learning_rate: 0.01
+    weight_decay: 0.
+    gradient_clipping: 0.5
+    fit_policy: "fixed"
+advice_cloner:
+  args:
+    batch_size: 100
+    hidden_sizes_advice_cloner: [400, 400, 300, 300]
+    advice_step_size: 5.0
+    advice_max_steps: 50
+    advice_termination_threshold: 0.1
+    advice_search_width: 360.
+    residual_scaling_factor: 1.0
+    fit_policy: "restarts"
+    optimizer: "adam"
+    learning_rate: 0.001
+    weight_decay: 0.
+    gradient_clipping: 0.5
+    patience: 100
+

@@ -1,0 +1,3 @@
+[submodule "submodules/cuesim"]
+	path = submodules/cuesim
+	url = git@github.com:giuschio/cue-sim-public.git

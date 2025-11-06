@@ -1,0 +1,42 @@
+advice_agent_type: "learned_augmented"
+expert_path: "experiments/2024_10_11_FINETUNING/velocity/baselines_sweep/velocity_bias_noise-0.01/version_10_0/ckpt_policy/model-epoch=39000-val_reward=0.51.ckpt"
+base_policy: "experiments/2024_09_26_FINAL_EXPLORATION/20K_labels/version_0_0/ckpt_policy/model-epoch=9930000-val_reward=0.46.ckpt"
+seed: 10
+env_type: "Cuesim/ThreeBallHard-Cuelearner"
+env_options:
+  physics.velocity_bias: 0.8
+trainer:
+  log_dir: "experiments/2024_10_11_FINETUNING/velocity/plot/velocity_w_residual_high_precision"
+  max_steps: 10000
+  start_steps: 0
+  buffer_size: 10000
+  advice_noise: 0.0
+  adv_update_after: 20
+  adv_update_every: 20
+  advice_probability: 1.0
+  eval_every: 100
+  eval_steps: 10000
+  verbose: true
+  print_every: 100
+  advice_checkpoint_options:
+    save_best: true
+    save_last: true
+    save_period: 1000
+advice_cloner:
+  args:
+    batch_size: 100
+    hidden_sizes_advice_cloner: [400, 400, 300, 300]
+    advice_step_size: 0.14159265359
+    # the only difference is that I only allow one step
+    advice_max_steps: 1
+    advice_termination_threshold: 0.01
+    advice_search_width: 1.
+    residual_scaling_factor: 100
+    fit_policy: "restarts"
+    optimizer: "adam"
+    learning_rate: 0.001
+    weight_decay: 0.
+    gradient_clipping: 0.5
+    patience: 100
+    advice_training_sampling: "bisection"
+
