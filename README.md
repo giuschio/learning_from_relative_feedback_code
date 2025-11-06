@@ -94,7 +94,7 @@ Use feedback to adapt a previously-learned policy to changes in the environment.
 Configs are available in `experiments/2024_10_11_FINETUNING`
 
 ## Checkpoints
-Every experiment reported in the paper can be trained end-to-end with the configs provided here. If you would like pre-trained checkpoints or other intermediate artifacts for a specific setup, request access through the Google Form linked on the project page—we typically respond within a couple of days.
+Every experiment reported in the paper can be trained end-to-end with the configs provided here. If you would like pre-trained checkpoints or other intermediate artifacts for a specific setup, request access through this [Google Form](https://forms.gle/pN8Ds8rr5CV83YLv8)—we typically respond within a couple of days.
 
 ## Citing
 If you use our code in your research, please cite our paper as:
